@@ -601,7 +601,7 @@ function renderWeekHTML(result, prefixId = "") {
       </div>
     </details>
 
-    <details class="section reels" open>
+    <details class="section reels">
       ${sectionSummary("🎥", "Reels (3)", "film + post")}
       <div class="section-body">
         <div class="grid3">${reels}</div>
