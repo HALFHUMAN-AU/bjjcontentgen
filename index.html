@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BJJ Gym Content Generator</title>
+
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --panel: #ffffff;
+            --panel2: #fbfcfe;
+            --text: #0b1220;
+            --muted: rgba(11, 18, 32, .62);
+            --line: rgba(11, 18, 32, .10);
+            --accent: #0aa7c2;
+            --shadow: 0 10px 30px rgba(11, 18, 32, .10);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            background:
+                radial-gradient(1200px 800px at 10% 0%, rgba(10, 167, 194, .10), transparent 55%),
+                radial-gradient(900px 600px at 90% 10%, rgba(19, 220, 255, .08), transparent 50%),
+                var(--bg);
+            color: var(--text);
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+
+        .sub {
+            margin: 0 0 18px 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-card {
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin: 0 0 6px 0;
+        }
+
+        input {
+            width: 280px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: #ffffff;
+            color: var(--text);
+            outline: none;
+        }
+
+        input:focus {
+            border-color: rgba(10, 167, 194, .55);
+            box-shadow: 0 0 0 3px rgba(10, 167, 194, .18);
+        }
+
+        .btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: #ffffff;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        button.primary {
+            border-color: rgba(10, 167, 194, .55);
+            background: rgba(10, 167, 194, .12);
+            color: #053642;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            border-color: rgba(10, 167, 194, .45);
+            box-shadow: 0 10px 18px rgba(11, 18, 32, .08);
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .tools {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 14px 0 16px 0;
+        }
+
+        .toolbtn {
+            padding: 8px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: #ffffff;
+            color: var(--text);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        details.week {
+            margin: 14px 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        details.week>summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            user-select: none;
+        }
+
+        details.week>summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .week-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            border: 1px solid var(--line);
+            background: rgba(11, 18, 32, .04);
+            color: var(--muted);
+            font-weight: 750;
+        }
+
+        .chev {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .week-body {
+            padding: 0 16px 16px 16px;
+            border-top: 1px solid var(--line);
+        }
+
+        details.section {
+            margin-top: 12px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: var(--panel2);
+            overflow: hidden;
+        }
+
+        details.section>summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 12px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            user-select: none;
+        }
+
+        details.section>summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .section-title {
+            font-weight: 900;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ico {
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid rgba(11, 18, 32, .10);
+            background: rgba(255, 255, 255, .65);
+            color: rgba(11, 18, 32, .75);
+            font-size: 13px;
+            line-height: 1;
+            flex: 0 0 auto;
+        }
+
+        .section-body {
+            padding: 12px;
+            border-top: 1px solid var(--line);
+        }
+
+        .grid3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .grid3 {
+                grid-template-columns: 1fr;
+            }
+
+            input {
+                width: 100%;
+            }
+        }
+
+        .block {
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: #ffffff;
+        }
+
+        .k {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 6px;
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
+
+        .v {
+            font-size: 14px;
+            white-space: pre-wrap;
+            line-height: 1.45;
+        }
+
+        .list {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--text);
+        }
+
+        .list li {
+            margin: 6px 0;
+            color: var(--text);
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .calendar {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .day {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 10px;
+            background: #ffffff;
+        }
+
+        .day .d {
+            font-weight: 900;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .day .t {
+            font-weight: 850;
+            font-size: 13px;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: rgba(10, 167, 194, .95);
+            font-weight: 900;
+        }
+
+        a.jump {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 12px;
+            font-weight: 900;
+            color: rgba(10, 167, 194, .95);
+            text-decoration: none;
+        }
+
+        a.jump:hover {
+            text-decoration: underline;
+        }
+
+        /* Calm category colouring */
+        .section.film {
+            border-left: 4px solid #f6b26b;
+            background: #fff8f1;
+        }
+
+        .section.calendarSec {
+            border-left: 4px solid #a4a9b6;
+            background: #f6f7fa;
+        }
+
+        .section.reels {
+            border-left: 4px solid #6fa8dc;
+            background: #f3f7fc;
+        }
+
+        .section.carousels {
+            border-left: 4px solid #8e7cc3;
+            background: #f6f3fb;
+        }
+
+        .section.stories {
+            border-left: 4px solid #93c47d;
+            background: #f3faf1;
+        }
+
+        .section.interview {
+            border-left: 4px solid #76a5af;
+            background: #f2f8fa;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>BJJ Gym Content Generator</h1>
+    <p class="sub">Generate a week or a full 30 days (4 weeks). Month view is collapsible so you can actually use it.
+    </p>
+
+    <div class="card form-card">
+        <div class="row">
+            <div>
+                <label>Gym name</label>
+                <input id="gym" placeholder="Coastal BJJ" />
+            </div>
+            <div>
+                <label>Location</label>
+                <input id="location" placeholder="Old Bar, NSW" />
+            </div>
+            <div>
+                <label>Variation (optional)</label>
+                <input id="variation" placeholder="1" />
+            </div>
+        </div>
+
+        <div class="btns">
+            <button class="primary" id="genWeek" type="button">Generate Week</button>
+            <button class="primary" id="genMonth" type="button">Generate 30 Days</button>
+            <button id="download" type="button">Download Week Pack (TXT)</button>
+        </div>
+
+        <div class="small">
+            Variation = consistent “shuffle”. Blank uses Weeks 1-4. Setting 10 uses Weeks 10-13.
+        </div>
+    </div>
+
+    <div id="tools" class="tools" style="display:none;">
+        <button class="toolbtn" type="button" onclick="toggleWeeks(true)">Expand all weeks</button>
+        <button class="toolbtn" type="button" onclick="toggleWeeks(false)">Collapse all weeks</button>
+        <button class="toolbtn" type="button" onclick="toggleSections(true)">Expand all sections</button>
+        <button class="toolbtn" type="button" onclick="toggleSections(false)">Collapse all sections</button>
+    </div>
+
+    <div id="output"></div>
+
+    <script src="./app.js"></script>
+    <script>
+        function toggleWeeks(open) {
+            document.querySelectorAll('details.week').forEach(d => d.open = open);
+        }
+        function toggleSections(open) {
+            document.querySelectorAll('details.section').forEach(d => d.open = open);
+        }
+    </script>
+</body>
+
+</html>
